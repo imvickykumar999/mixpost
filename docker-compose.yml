@@ -27,7 +27,8 @@ services:
       - .env
     labels:
       - traefik.enable=true
-      - traefik.http.routers.mixpost.rule=Host(`socialmedia.mobi-marketing.biz`)
+      - traefik.http.routers.mixpost.rule=Host(`mixpost.imvickykumar999.online`)
+      - traefik.http.services.mixpost.loadbalancer.server.port=80
       - traefik.http.routers.mixpost.tls=true
       - traefik.http.routers.mixpost.entrypoints=web,websecure
       - traefik.http.routers.mixpost.tls.certresolver=mytlschallenge
@@ -36,7 +37,7 @@ services:
       - traefik.http.middlewares.mixpost.headers.browserXSSFilter=true
       - traefik.http.middlewares.mixpost.headers.contentTypeNosniff=true
       - traefik.http.middlewares.mixpost.headers.forceSTSHeader=true
-      - traefik.http.middlewares.mixpost.headers.SSLHost=socialmedia.mobi-marketing.biz
+      - traefik.http.middlewares.mixpost.headers.SSLHost=mixpost.imvickykumar999.online
       - traefik.http.middlewares.mixpost.headers.STSIncludeSubdomains=true
       - traefik.http.middlewares.mixpost.headers.STSPreload=true
       - traefik.http.routers.mixpost.middlewares=mixpost@docker
@@ -49,17 +50,16 @@ services:
     restart: unless-stopped
 
   mysql:
-    image: 'mysql/mysql-server:8.0'
+    image: mysql:8.0
     environment:
+      MYSQL_ROOT_PASSWORD: **********
       MYSQL_DATABASE: mixpost_db
       MYSQL_USER: mixpost_user
-      MYSQL_PASSWORD: Q....y!....6
+      MYSQL_PASSWORD: **********
     volumes:
-      - 'mysql:/var/lib/mysql'
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-pQ....y!....6"]
-      retries: 3
-      timeout: 5s
+      - mysql:/var/lib/mysql
+    ports:
+      - "3306:3306"
     restart: unless-stopped
 
   redis:
