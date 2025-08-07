@@ -6,7 +6,10 @@ sudo docker compose down
 sudo docker compose up -d
 ```
 
-    https://mixpost.imvickykumar999.online/mixpost/callback/twitter
+## Scheduled Posts
+
+    https://mastodon.social/@imvickykumar999/114986385813072684
+    https://x.com/imvickykumar999/status/1953363000359870641
 
 <img width="1327" height="699" alt="image" src="https://github.com/user-attachments/assets/4f612d36-7265-4be0-bf8b-f371dc454cc7" />
 <img width="1327" height="699" alt="image" src="https://github.com/user-attachments/assets/ced7ebea-9faa-45cf-80b2-026db61e9ad6" />
