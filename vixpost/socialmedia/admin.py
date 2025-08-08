@@ -4,8 +4,10 @@ from .models import ScheduledTask
 
 @admin.register(ScheduledTask)
 class ScheduledTaskAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'run_at', 'executed', 'media_preview')
-    readonly_fields = ('media_preview',)
+    list_display = ('name', 'run_at', 'executed', 'url_generated', 'media_preview')
+    list_editable = ('executed',)
+    readonly_fields = ('media_preview', 'url_generated')
+    list_display_links = ('name',)
 
     def media_preview(self, obj):
         if obj.media:
@@ -22,5 +24,11 @@ class ScheduledTaskAdmin(admin.ModelAdmin):
             else:
                 return format_html('<a href="{}" target="_blank">Download File</a>', file_url)
         return "-"
-    
+
     media_preview.short_description = 'Media Preview'
+
+    def url_generated(self, obj):
+        if obj.url_generated:
+            return format_html('<a href="{}" target="_blank">{}</a>', obj.url_generated, obj.url_generated)
+        return "-"
+    url_generated.short_description = "Mastodon URL"

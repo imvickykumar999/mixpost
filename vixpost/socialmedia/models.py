@@ -14,5 +14,11 @@ class ScheduledTask(models.Model):
         help_text="Upload image/video/gif"
     )
 
+    url_generated = models.URLField(
+        blank=True,
+        null=True,
+        help_text="Mastodon URL after successful post"
+    )
+
     def __str__(self):
         return self.name
