@@ -6,7 +6,9 @@ sudo docker compose down
 sudo docker compose up -d
 ```
 
-## Scheduled Posts
+<img width="1535" height="982" alt="image" src="https://github.com/user-attachments/assets/bdc1dad6-c3db-4223-965f-86f943415d97" />
+
+## `Scheduled Posts`
 
     https://mastodon.social/@imvickykumar999/114986385813072684
     https://x.com/imvickykumar999/status/1953363000359870641
