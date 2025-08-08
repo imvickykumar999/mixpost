@@ -9,7 +9,13 @@ TELEGRAM_CHAT_ID = "5721393154"  # Replace with your actual chat ID
 
 @shared_task
 def my_custom_task(task_id):
-    text = f"Running task with ID {task_id}"
+    try:
+        task = ScheduledTask.objects.get(id=task_id)
+        task_name = task.name
+    except ScheduledTask.DoesNotExist:
+        task_name = f"Unknown task (ID: {task_id})"
+
+    text = f"Running scheduled task: {task_name}"
     print(text)
 
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
