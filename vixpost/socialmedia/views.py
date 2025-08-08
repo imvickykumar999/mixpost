@@ -1,3 +1,6 @@
-from django.shortcuts import render
+from django.http import JsonResponse
+from .tasks import check_and_run_scheduled_tasks
 
-# Create your views here.
+def run_scheduled_tasks_view(request):
+    check_and_run_scheduled_tasks.delay()
+    return JsonResponse({"status": "Scheduled tasks triggered"})
