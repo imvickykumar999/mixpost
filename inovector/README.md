@@ -1,6 +1,12 @@
 # `Scheduled Posts`
 
 ```bash
+C:\Users\surface\Documents\GitHub\mixpost\inovector>scp C:\Users\surface\Documents\GitHub\mixpost\inovector\vixpost.zip root@157.254.189.33:/root/projects/
+root@157.254.189.33's password:
+vixpost.zip                                    100%   42KB 428.2KB/s   00:00
+```
+
+```bash
 sudo docker compose exec mixpost php artisan mixpost-auth:password admin@example.com
 sudo docker compose down
 sudo docker compose up -d

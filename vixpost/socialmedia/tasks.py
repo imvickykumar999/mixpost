@@ -16,24 +16,9 @@ MASTODON_CLIENT_SECRET = os.getenv("MASTODON_CLIENT_SECRET")
 
 
 def upload_and_post(task_name, caption, media_path):
-    # --- Telegram message ---
-    telegram_text = f"Running scheduled task: {task_name}"
-    print(f"Sending to Telegram: {telegram_text}")
-
-    telegram_url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
-    telegram_payload = {
-        "chat_id": TELEGRAM_CHAT_ID,
-        "text": telegram_text
-    }
-
-    try:
-        telegram_response = requests.post(telegram_url, data=telegram_payload)
-        telegram_response.raise_for_status()
-        print("Telegram message sent successfully.")
-    except requests.exceptions.RequestException as e:
-        print(f"Failed to send Telegram message: {e}")
-
     # --- Mastodon upload and post ---
+    post_url = None
+
     try:
         mastodon = Mastodon(
             client_id=MASTODON_CLIENT_ID,
@@ -58,17 +43,35 @@ def upload_and_post(task_name, caption, media_path):
                 status=caption,
                 media_ids=[media_id]
             )
-            print(f"Mastodon post created with media: {post['url']}")
         else:
-            # No media, just post caption text
             post = mastodon.status_post(status=caption)
-            print(f"Mastodon post created without media: {post['url']}")
 
-        return post  # ✅ Return the post object
+        post_url = post.get('url')
+        print(f"Mastodon post created: {post_url}")
 
     except Exception as e:
         print(f"Failed to post on Mastodon: {e}")
-        return None  # In case of failure
+        post_url = None
+
+    # --- Telegram message ---
+    telegram_text = f"✅ Scheduled task: {task_name}"
+    if post_url:
+        telegram_text += f"\n\n🔗 Mastodon Post: {post_url}"
+
+    telegram_url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+    telegram_payload = {
+        "chat_id": TELEGRAM_CHAT_ID,
+        "text": telegram_text
+    }
+
+    try:
+        telegram_response = requests.post(telegram_url, data=telegram_payload)
+        telegram_response.raise_for_status()
+        print("Telegram message sent successfully.")
+    except requests.exceptions.RequestException as e:
+        print(f"Failed to send Telegram message: {e}")
+
+    return {'url': post_url} if post_url else None
 
 
 @shared_task

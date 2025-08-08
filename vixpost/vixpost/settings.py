@@ -26,8 +26,15 @@ SECRET_KEY = 'django-insecure-c80cv3dfpmlmk7*4@3t7@0w$7s3hr@1i$zrps)lbk)9uatffb9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '.ngrok-free.app',
+    '127.0.0.1',
+]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://free-camel-deadly.ngrok-free.app',
+]
 
 # Application definition
 
