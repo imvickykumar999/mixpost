@@ -6,7 +6,12 @@ class ScheduledTask(models.Model):
     executed = models.BooleanField(default=False)
     
     # New fields
-    caption = models.TextField(blank=True, null=True)
+    caption = models.TextField(
+        blank=True, 
+        null=True,
+        help_text="Caption text (max 500 characters)."
+    )
+
     media = models.FileField(
         upload_to='scheduled_media/', 
         blank=True, 
