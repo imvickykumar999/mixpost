@@ -20,6 +20,7 @@ server {
 server {
     listen 443 ssl;
     server_name vixpost.imvickykumar999.online;
+    client_max_body_size 50M;
 
     ssl_certificate /etc/letsencrypt/live/vixpost.imvickykumar999.online/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/vixpost.imvickykumar999.online/privkey.pem;
